@@ -1,3 +1,5 @@
+import {useRouter} from "next/router";
+
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const headers = {
     'Content-Type': 'application/json'
@@ -7,6 +9,7 @@ export async function ApiUserLogin(email: string, password: string) {
     const response = await fetch(`${apiUrl}/user/login`, {
         method: 'POST',
         headers: headers,
+        credentials: 'include',
         body: JSON.stringify({
             'email': email,
             'password': password,
@@ -20,7 +23,6 @@ export async function ApiUserLogin(email: string, password: string) {
         throw new Error('Failed to fetch API')
     }
 
-    return json;
 }
 
 export async function getAllTransactions() {
