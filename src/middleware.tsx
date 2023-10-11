@@ -15,7 +15,12 @@ export function middleware(request: NextRequest) {
 // See "Matching Paths" below to learn more
 export const config = {
     matcher: [
+        '/assistance/:path*',
+        '/calendar/:path*',
+        '/documentation/:path*',
         '/home/:path*',
-        '/register/:path*',
+        '/notifications/:path*',
+        '/personal-page/:path*',
+        '/transactions/:path*',
     ],
 }

@@ -36,3 +36,22 @@ export async function getAllTransactions() {
 
     return response.json();
 }
+
+class ApiHelper {
+    private static apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    private static headers: HeadersType = {
+        'Content-Type': 'application/json',
+    }
+
+    static async doRequest(path: string, method: string, body?: any): Promise<any> {
+        const url = `${ApiHelper.apiUrl}/${path}`
+
+        const options: RequestInit = {
+            method: method,
+            headers: ApiHelper.headers,
+            credentials: 'include'
+        }
+    }
+
+
+}
