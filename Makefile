@@ -1,4 +1,4 @@
 .PHONY: up
 
-up:
+dev:
 	yarn dev

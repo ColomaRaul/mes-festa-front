@@ -14,9 +14,11 @@ export const ProfitColumns: ColumnDef<Profit>[] = [
         header: 'Data',
         cell: ({row}) => {
             const date = row.getValue('date');
-            const formatted = new Date(date as string).toLocaleDateString();
+            const formatted = new Date(date as string);
+            const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const formattedDate = new Intl.DateTimeFormat('es-ES', options).format(formatted);
 
-            return <div>{formatted}</div>
+            return <div>{formattedDate}</div>;
         }
     },
     {
