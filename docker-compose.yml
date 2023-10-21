@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mes-festa-front
+    restart: always
+    ports:
+      - "${NEXT_PUBLIC_PORT}:${NEXT_PUBLIC_PORT}"
+    environment:
+      - NEXT_PUBLIC_PORT:${NEXT_PUBLIC_PORT}
