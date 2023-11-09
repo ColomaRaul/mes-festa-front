@@ -1,6 +1,6 @@
 'use client'
 
-export default function Assistance() {
+export default function AssistancePage() {
     return (
         <main>
             <h1>hello from assistance</h1>

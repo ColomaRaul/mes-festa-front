@@ -1,7 +1,7 @@
 'use client'
 import Header from "@/components/main/header";
 import {SyntheticEvent, useState} from "react";
-import {ApiUserLogin} from "@/lib/api/backend-api";
+import {ApiUserLogin, getAllLoggedUserOrganization} from "@/lib/api/backend-api";
 import {useRouter} from "next/navigation";
 
 export default function Login() {
@@ -14,7 +14,7 @@ export default function Login() {
 
         await ApiUserLogin(email, password);
 
-        await router.push('/home');
+        await router.push(`/organization`);
     }
 
     return (

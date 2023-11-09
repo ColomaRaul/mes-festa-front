@@ -26,12 +26,21 @@ export async function ApiUserLogin(email: string, password: string) {
     }
 }
 
-export async function getAllTransactions() {
-    const organizationId = 'f0e3df76-c09e-4505-9d3d-cf112b6cca2e';
+export async function getAllLoggedUserTransactions(organizationId: string) {
     const response = await fetch(`${apiUrl}/transaction/user-organization/${organizationId}`, {
         method: 'GET',
         headers: headers,
         credentials: 'include',
+    })
+
+    return response.json();
+}
+
+export async function getAllLoggedUserOrganization() {
+    const response = await fetch(`${apiUrl}/organization/by-user`, {
+        method: 'GET',
+        headers: headers,
+        credentials: 'include'
     })
 
     return response.json();

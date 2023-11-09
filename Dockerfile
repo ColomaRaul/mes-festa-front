@@ -20,4 +20,4 @@ RUN yarn cache clean --force
 
 EXPOSE 3000
 
-CMD [ "yarn","start" ]
+CMD [ "next","dev" ]

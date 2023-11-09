@@ -1,6 +1,6 @@
 'use client'
 
-export default function Calendar() {
+export default function CalendarPage() {
     return (
         <main>
             <h1>hello from calendar</h1>
