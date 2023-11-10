@@ -3,6 +3,7 @@
 import {getAllLoggedUserOrganization} from "@/lib/api/backend-api";
 import Link from "next/link";
 import {useEffect, useState} from "react";
+import {UserOrganizationData} from "@/lib/api/api-types";
 
 export default function OrganizationPage() {
     const [organizations, setOrganizations] = useState([]);
@@ -23,9 +24,9 @@ export default function OrganizationPage() {
 
     return (
         <div>
-            <h1>Elegis l'organització que corresponga</h1>
+            <h1>{`Elegis l'organització que corresponga`}</h1>
             <ul>
-                {organizations.map((organization) => (
+                {organizations.map((organization: UserOrganizationData) => (
                     <li key={organization.organization_id}>
                         <Link href={`/organization/${organization.organization_id}/home`}>{organization.organization_name}</Link>
                     </li>

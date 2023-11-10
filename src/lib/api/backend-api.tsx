@@ -1,3 +1,5 @@
+import {UserOrganizationData} from "@/lib/api/api-types";
+
 type HeadersType = {
     'Content-Type': string;
     'Authorization'?: string;
@@ -36,31 +38,12 @@ export async function getAllLoggedUserTransactions(organizationId: string) {
     return response.json();
 }
 
-export async function getAllLoggedUserOrganization() {
+export async function getAllLoggedUserOrganization(): Promise<UserOrganizationData> {
     const response = await fetch(`${apiUrl}/organization/by-user`, {
         method: 'GET',
         headers: headers,
         credentials: 'include'
     })
 
-    return response.json();
-}
-
-class ApiHelper {
-    private static apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    private static headers: HeadersType = {
-        'Content-Type': 'application/json',
-    }
-
-    static async doRequest(path: string, method: string, body?: any): Promise<any> {
-        const url = `${ApiHelper.apiUrl}/${path}`
-
-        const options: RequestInit = {
-            method: method,
-            headers: ApiHelper.headers,
-            credentials: 'include'
-        }
-    }
-
-
+    return await response.json();
 }
