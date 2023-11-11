@@ -24,8 +24,10 @@ export async function ApiUserLogin(email: string, password: string) {
     const json = await response.json();
 
     if (json.errors) {
-        throw new Error('Failed to fetch API')
+        return {message: 'Failed to fetch API', status: 401};
     }
+
+    return json;
 }
 
 export async function getAllLoggedUserTransactions(organizationId: string) {

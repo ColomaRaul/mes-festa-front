@@ -29,6 +29,7 @@ export default function OrganizationPage() {
                 {organizations.map((organization: UserOrganizationData) => (
                     <li key={organization.organization_id}>
                         <Link href={`/organization/${organization.organization_id}/home`}>{organization.organization_name}</Link>
+                        {/*Insert admin if has administrador or superadmin role*/}
                     </li>
                 ))}
             </ul>
