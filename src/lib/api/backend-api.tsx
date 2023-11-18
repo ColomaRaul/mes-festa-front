@@ -11,40 +11,50 @@ const headers: HeadersType = {
 }
 
 export async function ApiUserLogin(email: string, password: string) {
-    const response = await fetch(`${apiUrl}/user/login`, {
-        method: 'POST',
-        headers: headers,
-        credentials: 'include',
-        body: JSON.stringify({
-            'email': email,
-            'password': password,
+    try {
+        const response = await fetch(`${apiUrl}/user/login`, {
+            method: 'POST',
+            headers: headers,
+            credentials: 'include',
+            body: JSON.stringify({
+                'email': email,
+                'password': password,
+            })
         })
-    })
 
-    const json = await response.json();
+        const json = await response.json();
 
-    if (json.errors) {
+        if (json.statusCode == 400) {
+            return {message: json.message, status: 400}
+        }
+
+        if (json.statusCode == 401) {
+            return {message: json.message, status: 401}
+        }
+
+        return json;
+    } catch (error) {
         return {message: 'Failed to fetch API', status: 401};
     }
-
-    return json;
 }
 
-export async function getAllLoggedUserTransactions(organizationId: string) {
+export async function getAllLoggedUserTransactions(organizationId: string, accessToken: string) {
+    headers.Authorization = `Bearer ${accessToken}`;
+
     const response = await fetch(`${apiUrl}/transaction/user-organization/${organizationId}`, {
         method: 'GET',
         headers: headers,
-        credentials: 'include',
     })
 
     return response.json();
 }
 
-export async function getAllLoggedUserOrganization(): Promise<UserOrganizationData> {
+export async function getAllLoggedUserOrganization(accessToken: string): Promise<UserOrganizationData> {
+    headers.Authorization = `Bearer ${accessToken}`;
+
     const response = await fetch(`${apiUrl}/organization/by-user`, {
         method: 'GET',
         headers: headers,
-        credentials: 'include'
     })
 
     return await response.json();

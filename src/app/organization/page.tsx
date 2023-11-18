@@ -2,37 +2,58 @@
 
 import {getAllLoggedUserOrganization} from "@/lib/api/backend-api";
 import Link from "next/link";
-import {useEffect, useState} from "react";
 import {UserOrganizationData} from "@/lib/api/api-types";
+import {useSession} from "next-auth/react";
+import {useEffect, useState} from "react";
 
 export default function OrganizationPage() {
-    const [organizations, setOrganizations] = useState([]);
+    const [organizations, setOrganizations] = useState<any>([]);
+    const {data: session, status} = useSession();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allLoggedUserOrganization = await getAllLoggedUserOrganization();
-
-                setOrganizations(allLoggedUserOrganization);
+                if (session) {
+                    const allLoggedUserOrganization = await getAllLoggedUserOrganization(session?.user?.access_token);
+                    setOrganizations(allLoggedUserOrganization);
+                }
             } catch (error) {
                 console.log('error! help!')
             }
         };
 
         fetchData();
-    }, []);
+    }, [session]);
+
+
+    if (status === 'loading' || !session) {
+        return (
+            <div>
+                <h1>Cargant organitzacions</h1>
+            </div>
+        )
+    }
+
+    if (session?.user) {
+        return (
+            <div>
+                <h1>{`Elegis l'organització que corresponga`}</h1>
+                <ul>
+                    {organizations.map((organization: UserOrganizationData) => (
+                        <li key={organization.organization_id}>
+                            <Link
+                                href={`/organization/${organization.organization_id}/home`}>{organization.organization_name}</Link>
+                            {/*Insert admin if has administrador or superadmin role*/}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
 
     return (
         <div>
-            <h1>{`Elegis l'organització que corresponga`}</h1>
-            <ul>
-                {organizations.map((organization: UserOrganizationData) => (
-                    <li key={organization.organization_id}>
-                        <Link href={`/organization/${organization.organization_id}/home`}>{organization.organization_name}</Link>
-                        {/*Insert admin if has administrador or superadmin role*/}
-                    </li>
-                ))}
-            </ul>
+            <h1>Nada</h1>
         </div>
     )
 }
