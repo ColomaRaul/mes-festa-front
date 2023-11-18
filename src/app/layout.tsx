@@ -1,6 +1,8 @@
 import '../styles/globals.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import SessionAuthProvider from "@/context/SessionAuthProvider";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +19,9 @@ export default function RootLayout({
   return (
       <html lang="en" data-bs-theme="light">
       <body className={inter.className} >
-        {children}
+          <main className={'container'}>
+              <SessionAuthProvider>{children}</SessionAuthProvider>
+          </main>
         {/*<Footer/>*/}
       </body>
     </html>

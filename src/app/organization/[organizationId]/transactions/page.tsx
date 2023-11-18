@@ -6,26 +6,30 @@ import {ProfitDataTable} from "@/app/organization/[organizationId]/transactions/
 import {ProfitColumns} from "@/app/organization/[organizationId]/transactions/profit-columns";
 import {ExpenseDataTable} from "@/app/organization/[organizationId]/transactions/expense-data-table";
 import {ExpenseColumns} from "@/app/organization/[organizationId]/transactions/expense-columns";
+import {useSession} from "next-auth/react";
 
 export default function TransactionsPage({ params }: { params: { organizationId: string } }) {
     const [profitData, setProfitData] = useState([]);
     const [expenseData, setExpenseData] = useState([]);
+    const {data: session, status} = useSession();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const allTransactions = await getAllLoggedUserTransactions(params.organizationId);
-                // @ts-ignore
-                setProfitData(allTransactions.filter(item => item.typeTransaction === 'PROFIT'));
-                // @ts-ignore
-                setExpenseData(allTransactions.filter(item => item.typeTransaction === 'EXPENSE'));
+                if (session) {
+                    const allTransactions = await getAllLoggedUserTransactions(params.organizationId, session?.user?.access_token);
+                    // @ts-ignore
+                    setProfitData(allTransactions.filter(item => item.typeTransaction === 'PROFIT'));
+                    // @ts-ignore
+                    setExpenseData(allTransactions.filter(item => item.typeTransaction === 'EXPENSE'));
+                }
             } catch (error) {
                 console.error('Error al obtener datos asíncronos:', error);
             }
         };
 
         fetchData();
-    }, []);
+    }, [session]);
 
     return (
         <main>

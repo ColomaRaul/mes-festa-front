@@ -1,12 +1,12 @@
 import Link from "next/link";
+import LoginButton from "@/components/LoginButton";
 
-export default function Home() {
+
+export default function HomePage() {
   return (
       <div>
-        <h1>Benvingut a la App MES FESTA</h1>
-        <ul>
-          <li><Link href={'/login'}>Login</Link></li>
-        </ul>
+        <h1 className={'text-primary'}>Benvingut a la App MES FESTA</h1>
+          <LoginButton/>
       </div>
   )
 }
