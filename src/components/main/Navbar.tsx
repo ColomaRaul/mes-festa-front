@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import {signIn, signOut, useSession} from "next-auth/react";
+import {useContext} from "react";
+import OrganizationContext from "@/context/OrganizationContext";
 
 export default function MainNavbar() {
     const {data: session, status} = useSession();
+    const organizationContext = useContext(OrganizationContext);
 
     if (session) {
         return (
@@ -12,7 +15,9 @@ export default function MainNavbar() {
                 <header className="p-3 mb-3 border-bottom">
                     <div className="container">
                         <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                            <div className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"/>
+                            <div className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                                {organizationContext.organizationName}
+                            </div>
                             <div className="col-md-3 text-end">
                                 {session.user.email}
                             </div>
