@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import SessionAuthProvider from "@/context/SessionAuthProvider";
 import MainNavbar from "@/components/main/Navbar";
+import {OrganizationContextProvider} from "@/context/OrganizationContext";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,8 +23,10 @@ export default function RootLayout({
       <body className={inter.className} >
           <main className={'container'}>
               <SessionAuthProvider>
-                  <MainNavbar/>
-                  {children}
+                  <OrganizationContextProvider>
+                      <MainNavbar/>
+                      {children}
+                  </OrganizationContextProvider>
               </SessionAuthProvider>
           </main>
         {/*<Footer/>*/}
