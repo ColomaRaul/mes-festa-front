@@ -5,16 +5,21 @@ import Link from "next/link";
 import {UserOrganizationData} from "@/lib/api/api-types";
 import {useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function OrganizationPage() {
-    const [organizations, setOrganizations] = useState<any>([]);
+    const [organizations, setOrganizations] = useState<UserOrganizationData[]>([]);
     const {data: session, status} = useSession();
+    const router = useRouter();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 if (session) {
                     const allLoggedUserOrganization = await getAllLoggedUserOrganization(session?.user?.access_token);
+                    if (allLoggedUserOrganization.length === 1) {
+                        router.push(`/organization/${allLoggedUserOrganization[0].organization_id}/home`)
+                    }
                     setOrganizations(allLoggedUserOrganization);
                 }
             } catch (error) {

@@ -49,7 +49,7 @@ export async function getAllLoggedUserTransactions(organizationId: string, acces
     return response.json();
 }
 
-export async function getAllLoggedUserOrganization(accessToken: string): Promise<UserOrganizationData> {
+export async function getAllLoggedUserOrganization(accessToken: string): Promise<UserOrganizationData[]> {
     headers.Authorization = `Bearer ${accessToken}`;
 
     const response = await fetch(`${apiUrl}/organization/by-user`, {

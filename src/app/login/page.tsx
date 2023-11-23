@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Header from "@/components/main/header";
 
 export default function LoginPage() {
     const [errors, setErrors] = useState<string[]>([]);
@@ -30,29 +31,41 @@ export default function LoginPage() {
 
     return (
         <div className="form-signin w-100 m-auto">
-            <h1>Login</h1>
+            <Header/>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="test@test.com"
-                    name="email"
-                    className="form-control mb-2"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="123123"
-                    name="password"
-                    className="form-control mb-2"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                />
+                <div className={'form-floating'}>
+                    <input
+                        type="email"
+                        placeholder="test@test.com"
+                        name="email"
+                        className="form-control mb-2"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                    />
+                    <label htmlFor="floatingInput">Email</label>
+                </div>
+                <div className={'form-floating'}>
+                    <input
+                        type="password"
+                        placeholder="123123"
+                        name="password"
+                        className="form-control mb-2"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <label htmlFor='floatingPassword'>Contrassenya</label>
+                </div>
+                <div className="form-check text-start my-3">
+                    <input className="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault"/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                        Remember me
+                    </label>
+                </div>
                 <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary w-100 py-2"
                 >
-                    Login
+                    Accedir
                 </button>
             </form>
 
